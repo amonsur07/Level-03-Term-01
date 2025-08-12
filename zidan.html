@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>My Course Notes</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 20px;
+    }
+    h1 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 40px;
+    }
+    .course {
+        max-width: 700px;
+        margin: 30px auto;
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .course h2 {
+        color: #007BFF;
+        margin-top: 0;
+    }
+    .pdf-list {
+        margin-top: 15px;
+    }
+    .pdf-item {
+        padding: 10px 0;
+        border-bottom: 1px solid #ddd;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .pdf-item:last-child {
+        border-bottom: none;
+    }
+    .pdf-link {
+        text-decoration: none;
+        color: #007BFF;
+        margin-right: 15px;
+    }
+    .pdf-link:hover {
+        text-decoration: underline;
+    }
+    .links {
+        white-space: nowrap;
+    }
+</style>
+</head>
+<body>
+
+<h1>My Course Notes</h1>
+
+<div id="courses-container"></div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const courses = [
+        {
+            title: "Measurement & Instruments",
+            notes: [
+                { name: 'Electrical and Electronics Measurements by Prithwiraj purkait', file: 'pdfs/Measurement & Instruments/Electrical and Electronics Measurements by Prithwiraj Purkait.pdf' },
+                { name: 'L-1', file: 'pdfs/Measurement & Instruments/L-1.pdf' },
+                { name: 'L-2 (03-03-2024)', file: 'pdfs/Measurement & Instruments/L-2 03_03_2024.pdf' },
+                { name: 'L-3 (10-03-2024)', file: 'pdfs/Measurement & Instruments/L-3 10_03_2024.pdf' },
+                { name: 'L-4 (16-03-2024)', file: 'pdfs/Measurement & Instruments/L-4 16_03_2024.pdf' },
+                { name: 'L-5 (23-03-2024)', file: 'pdfs/Measurement & Instruments/L-5 23_03_2024.pdf' },
+                { name: 'L-6 (30-03-2024)', file: 'pdfs/Measurement & Instruments/L-6 30_03_2024.pdf' },
+                { name: 'L-7 (20-04-2024)', file: 'pdfs/Measurement & Instruments/L-7 20_04_2024.pdf' },
+                { name: 'L-8 (28-04-2024)', file: 'pdfs/Measurement & Instruments/L-8 28_04_2024.pdf' },
+                { name: 'L-9 (04-05-2024)', file: 'pdfs/Measurement & Instruments/L-9 04_05_2024.pdf' },
+                { name: 'L-10 (11-05-2024)', file: 'pdfs/Measurement & Instruments/L-10 11_05_2024.pdf' },
+                { name: 'L-11 (18-05-2024)', file: 'pdfs/Measurement & Instruments/L-11 18_05_2024.pdf' },
+                { name: 'L-12 (25-05-2024)', file: 'pdfs/Measurement & Instruments/L-12 25_05_2024.pdf' },
+                { name: 'L-13 (26-05-2024)', file: 'pdfs/Measurement & Instruments/L-13 26_05_2024.pdf' }
+            ]
+        },
+        {
+            title: "Power System",
+            notes: [
+                { name: 'Power System - Note 1 (Basic Concepts)', file: 'pdfs/Power System/PS-Note1.pdf' },
+                { name: 'Power System - Note 2 (Advanced Topics)', file: 'pdfs/Power System/PS-Note2.pdf' }
+            ]
+        },
+        {
+            title: "Digital Electronics",
+            notes: [
+                { name: 'Digital Electronics - Note 1 (Combinational Logic)', file: 'pdfs/Digital Electronics/DE-Note1.pdf' }
+            ]
+        }
+        // Add more courses if needed
+    ];
+
+    function encodeFilePath(path) {
+        // Encode each path segment to handle spaces/special chars
+        return path.split('/').map(encodeURIComponent).join('/');
+    }
+
+    const container = document.getElementById('courses-container');
+
+    courses.forEach(course => {
+        const courseDiv = document.createElement('div');
+        courseDiv.className = 'course';
+
+        const title = document.createElement('h2');
+        title.textContent = course.title;
+        courseDiv.appendChild(title);
+
+        const pdfList = document.createElement('div');
+        pdfList.className = 'pdf-list';
+
+        course.notes.forEach(note => {
+            const pdfItem = document.createElement('div');
+            pdfItem.className = 'pdf-item';
+
+            // Container for links
+            const linksDiv = document.createElement('div');
+            linksDiv.className = 'links';
+
+            // View link
+            const viewLink = document.createElement('a');
+            viewLink.className = 'pdf-link';
+            viewLink.href = encodeFilePath(note.file);
+            viewLink.target = '_blank';
+            viewLink.textContent = 'View';
+
+            // Download link
+            const downloadLink = document.createElement('a');
+            downloadLink.className = 'pdf-link';
+            downloadLink.href = encodeFilePath(note.file);
+            downloadLink.setAttribute('download', '');
+            downloadLink.textContent = 'Download';
+
+            linksDiv.appendChild(viewLink);
+            linksDiv.appendChild(document.createTextNode(' | '));
+            linksDiv.appendChild(downloadLink);
+
+            // PDF name on left
+            const nameSpan = document.createElement('span');
+            nameSpan.textContent = note.name;
+
+            pdfItem.appendChild(nameSpan);
+            pdfItem.appendChild(linksDiv);
+            pdfList.appendChild(pdfItem);
+        });
+
+        courseDiv.appendChild(pdfList);
+        container.appendChild(courseDiv);
+    });
+});
+</script>
+
+</body>
+</html>
